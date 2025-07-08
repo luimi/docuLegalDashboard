@@ -48,7 +48,7 @@ const Documents: React.FC = () => {
     }
 
     if (typeFilter) {
-      filtered = filtered.filter((doc: any) => doc.get('Type') === typeFilter);
+      filtered = filtered.filter((doc: any) => doc.get('type') === typeFilter);
     }
 
     return filtered;
@@ -121,8 +121,8 @@ const Documents: React.FC = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="">Todos los tipos</option>
-            <option value="Gratis">Gratis</option>
-            <option value="Pago">Pago</option>
+            <option value="free">Gratis</option>
+            <option value="paid">Pago</option>
           </select>
         </div>
       </div>
@@ -168,11 +168,11 @@ const Documents: React.FC = () => {
                     </td>
                     <td className="py-4 px-6">
                       <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        document.get('Type') === 'Pago' 
+                        document.get('type') === 'paid' 
                           ? 'bg-green-100 text-green-800' 
                           : 'bg-gray-100 text-gray-800'
                       }`}>
-                        {document.get('Type')}
+                        {document.get('type') === 'paid' ? 'Pago' : 'Gratis'}
                       </span>
                     </td>
                     <td className="py-4 px-6">
@@ -220,7 +220,7 @@ const Documents: React.FC = () => {
             <div>
               <p className="text-sm text-gray-600">Documentos Gratuitos</p>
               <p className="text-3xl font-bold text-gray-900">
-                {documents.filter((d: any) => d.get('Type') === 'Gratis').length}
+                {documents.filter((d: any) => d.get('type') === 'free').length}
               </p>
             </div>
             <div className="p-3 bg-gray-100 rounded-lg">
@@ -234,7 +234,7 @@ const Documents: React.FC = () => {
             <div>
               <p className="text-sm text-gray-600">Documentos de Pago</p>
               <p className="text-3xl font-bold text-gray-900">
-                {documents.filter((d: any) => d.get('Type') === 'Pago').length}
+                {documents.filter((d: any) => d.get('type') === 'paid').length}
               </p>
             </div>
             <div className="p-3 bg-green-100 rounded-lg">

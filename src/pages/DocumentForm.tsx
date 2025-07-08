@@ -76,6 +76,7 @@ const DocumentForm: React.FC = () => {
       acl.setPublicWriteAccess(false);
       acl.setRoleWriteAccess('admin', true);
       acl.setRoleReadAccess('admin', true);
+      document.setACL(acl);
     }
     document.set('title', title);
     document.set('category', new Parse.Object('Category', { id: categoryId }));
