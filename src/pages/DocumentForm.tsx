@@ -3,8 +3,23 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Save, FileText } from 'lucide-react';
 //import { mockCategories, mockDocuments } from '../utils/mockData';
 import { FormField, Document } from '../types';
-import DynamicFormBuilder from '../components/DynamicFormBuilder';
 import Parse from 'parse';
+import { SurveyCreator, SurveyCreatorComponent } from 'survey-creator-react';
+import "survey-core/survey.i18n";
+//import 'survey-core/survey.i18n.min.js';
+//import 'survey-creator-core/survey-creator-core.i18n.min.js';
+import 'survey-core/survey-core.min.css';
+import 'survey-creator-core/survey-creator-core.min.css';
+import SurveyCreatorTheme from 'survey-creator-core/themes';
+import { registerCreatorTheme } from 'survey-creator-core';
+import type { ICreatorOptions } from 'survey-creator-core';
+import './styles/DocumentForm.css';
+registerCreatorTheme(SurveyCreatorTheme);
+
+const defaultCreatorOptions: ICreatorOptions = {
+  autoSaveEnabled: true,
+  collapseOnDrag: true,
+};
 
 const DocumentForm: React.FC = () => {
   const { id } = useParams();
@@ -16,9 +31,9 @@ const DocumentForm: React.FC = () => {
   const [title, setTitle] = useState('');
   const [categoryId, setCategoryId] = useState('');
   const [prompt, setPrompt] = useState('');
-  const [type, setType] = useState<'gratis' | 'pago'>('gratis');
-  const [formFields, setFormFields] = useState<FormField[]>([]);
+  const [type, setType] = useState<'free' | 'paid'>('free');
   const [loading, setLoading] = useState(false);
+  const [creator, setCreator] = useState<SurveyCreator>(new SurveyCreator(defaultCreatorOptions));
 
   useEffect(() => {
     if (isEditing && id) {
@@ -28,6 +43,7 @@ const DocumentForm: React.FC = () => {
   }, [isEditing, id]);
   useEffect(() => {
     getCategories();
+    creator.locale = "es"
   }, [])
 
   const getDocument = async () => {
@@ -37,7 +53,8 @@ const DocumentForm: React.FC = () => {
       setCategoryId(document.get('category').id);
       setPrompt(document.get('prompt'));
       setType(document.get('Type'));
-      setFormFields(document.get('form') || []);
+      //setFormFields(document.get('form') || []);
+      creator.text = JSON.stringify(document.get('model') || {});
     }
   }
   const getCategories = async () => {
@@ -63,8 +80,8 @@ const DocumentForm: React.FC = () => {
     document.set('title', title);
     document.set('category', new Parse.Object('Category', { id: categoryId }));
     document.set('prompt', prompt);
-    document.set('Type', type);
-    document.set('form', formFields);
+    document.set('type', type);
+    document.set('model', JSON.parse(creator.text));
     try {
       await document.save();
       navigate('/dashboard/documents');
@@ -144,12 +161,12 @@ const DocumentForm: React.FC = () => {
               <select
                 id="type"
                 value={type}
-                onChange={(e) => setType(e.target.value as 'gratis' | 'pago')}
+                onChange={(e) => setType(e.target.value as 'free' | 'paid')}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 required
               >
-                <option value="Gratis">Gratis</option>
-                <option value="Pago">Pago</option>
+                <option value="free">Gratis</option>
+                <option value="paid">Pago</option>
               </select>
             </div>
 
@@ -176,10 +193,7 @@ const DocumentForm: React.FC = () => {
         {/* Dynamic Form Builder */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-6">Formulario Dinámico</h2>
-          <DynamicFormBuilder
-            fields={formFields}
-            onChange={setFormFields}
-          />
+          <SurveyCreatorComponent creator={creator} />
         </div>
 
         {/* Actions */}
