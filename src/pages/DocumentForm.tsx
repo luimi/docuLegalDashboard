@@ -13,6 +13,7 @@ import 'survey-creator-core/survey-creator-core.min.css';
 import SurveyCreatorTheme from 'survey-creator-core/themes';
 import { registerCreatorTheme } from 'survey-creator-core';
 import type { ICreatorOptions } from 'survey-creator-core';
+import "survey-creator-core/survey-creator-core.i18n";
 import './styles/DocumentForm.css';
 registerCreatorTheme(SurveyCreatorTheme);
 
