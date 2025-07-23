@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { FileText, FolderOpen, Scale } from 'lucide-react';
+import { FileText, FolderOpen, Scale, BotMessageSquare } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
   const location = useLocation();
@@ -17,6 +17,12 @@ const Sidebar: React.FC = () => {
       icon: FolderOpen, 
       label: 'Categorías',
       isActive: location.pathname.includes('/categories')
+    },
+    { 
+      path: '/dashboard/chatbot', 
+      icon: BotMessageSquare, 
+      label: 'Chatbot',
+      isActive: location.pathname.includes('/chatbot')
     }
   ];
 
@@ -61,7 +67,7 @@ const Sidebar: React.FC = () => {
       {/* Footer */}
       <div className="p-4 border-t border-slate-700">
         <p className="text-xs text-slate-400 text-center">
-          © 2024 DocuLegal
+          © 2025 DocuLegal
         </p>
       </div>
     </div>

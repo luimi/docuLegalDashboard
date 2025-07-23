@@ -8,6 +8,7 @@ import Documents from './pages/Documents';
 import DocumentForm from './pages/DocumentForm';
 import Categories from './pages/Categories';
 import Parse from 'parse';
+import Chatbot from './pages/Chatbot';
 
 
 
@@ -54,6 +55,7 @@ function App() {
             <Route path="documents/new" element={<DocumentForm />} />
             <Route path="documents/edit/:id" element={<DocumentForm />} />
             <Route path="categories" element={<Categories />} />
+            <Route path="chatbot" element={<Chatbot />} />
           </Route>
         </Routes>
       </Router>
