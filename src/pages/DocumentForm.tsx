@@ -21,6 +21,20 @@ const defaultCreatorOptions: ICreatorOptions = {
   autoSaveEnabled: true,
   collapseOnDrag: true,
 };
+const defaultCreator = {
+  "locale": "es",
+  "completedHtml": {
+    "es": "Generando documento, por favor espera..."
+  },
+  "pages": [],
+  "showTitle": false,
+  "showPageTitles": false,
+  "showPageNumbers": true,
+  "pagePrevText": "Anterior",
+  "pageNextText": "Siguiente",
+  "completeText": "Completar",
+  "headerView": "advanced"
+}
 
 const DocumentForm: React.FC = () => {
   const { id } = useParams();
@@ -45,6 +59,7 @@ const DocumentForm: React.FC = () => {
   useEffect(() => {
     getCategories();
     creator.locale = "es"
+    if(!isEditing) creator.text = JSON.stringify(defaultCreator);
   }, [])
 
   const getDocument = async () => {
@@ -54,8 +69,7 @@ const DocumentForm: React.FC = () => {
       setCategoryId(document.get('category').id);
       setPrompt(document.get('prompt'));
       setType(document.get('Type'));
-      //setFormFields(document.get('form') || []);
-      creator.text = JSON.stringify(document.get('model') || {});
+      creator.text = JSON.stringify(document.get('model') || defaultCreator);
     }
   }
   const getCategories = async () => {
