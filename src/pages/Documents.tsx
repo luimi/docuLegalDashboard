@@ -23,10 +23,8 @@ const Documents: React.FC = () => {
     getCategories();
   }, []);
   const getDocuments = async () => {
-    if(documents.length === 0) {
-      let result = await new Parse.Query('Document').find()
-      setDocuments(result? result : []);
-    }
+    let result = await new Parse.Query('Document').find()
+    setDocuments(result? result : []);
   }
   const getCategories = async () => {
     if(categories.length === 0) {
