@@ -4,6 +4,7 @@ import { FileText, Plus, Search, Filter, Edit, Trash2, Eye } from 'lucide-react'
 //import { mockDocuments, mockCategories } from '../utils/mockData';
 //import { Document } from '../types';
 import Parse from 'parse';
+import Switch from '../components/Switch';
 
 const Documents: React.FC = () => {
   const [documents, setDocuments] = useState<any>([]);
@@ -16,7 +17,7 @@ const Documents: React.FC = () => {
 
   // Filter documents
   React.useEffect(() => {
-    
+
   }, [documents, searchTerm, categoryFilter, typeFilter]);
   React.useEffect(() => {
     getDocuments();
@@ -24,10 +25,10 @@ const Documents: React.FC = () => {
   }, []);
   const getDocuments = async () => {
     let result = await new Parse.Query('Document').find()
-    setDocuments(result? result : []);
+    setDocuments(result ? result : []);
   }
   const getCategories = async () => {
-    if(categories.length === 0) {
+    if (categories.length === 0) {
       let result = await new Parse.Query('Category').find();
       setCategories(result);
     }
@@ -70,7 +71,7 @@ const Documents: React.FC = () => {
           <h1 className="text-3xl font-bold text-gray-900">Documentos</h1>
           <p className="text-gray-600 mt-2">Gestiona tus plantillas de documentos legales</p>
         </div>
-        
+
         <button
           onClick={() => navigate('/dashboard/documents/new')}
           className="flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
@@ -86,7 +87,7 @@ const Documents: React.FC = () => {
           <Filter className="h-5 w-5 text-gray-400" />
           <h3 className="text-lg font-semibold text-gray-900">Filtros</h3>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Search */}
           <div className="relative">
@@ -165,16 +166,20 @@ const Documents: React.FC = () => {
                       </span>
                     </td>
                     <td className="py-4 px-6">
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        document.get('type') === 'paid' 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-gray-100 text-gray-800'
-                      }`}>
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${document.get('type') === 'paid'
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-gray-100 text-gray-800'
+                        }`}>
                         {document.get('type') === 'paid' ? 'Pago' : 'Gratis'}
                       </span>
                     </td>
                     <td className="py-4 px-6">
                       <div className="flex items-center justify-center space-x-2">
+                        <Switch onChange={(checked) => {
+                          document.set('active', checked);
+                          document.save();
+                          
+                        }} checked={document.get('active')}/>
                         <button
                           onClick={() => handleEdit(document.id)}
                           className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors"

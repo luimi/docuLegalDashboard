@@ -91,6 +91,7 @@ const DocumentForm: React.FC = () => {
       acl.setPublicWriteAccess(false);
       acl.setRoleWriteAccess('admin', true);
       acl.setRoleReadAccess('admin', true);
+      document.set('active', false);
       document.setACL(acl);
     }
     document.set('title', title);
