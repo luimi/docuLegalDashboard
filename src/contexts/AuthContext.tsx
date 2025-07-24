@@ -15,7 +15,7 @@ export const useAuth = () => {
 const MOCK_USER: User = {
   id: '1',
   username: 'admin',
-  email: 'admin@doculegal.com'
+  email: 'admin@dokkul.com'
 };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

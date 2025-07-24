@@ -38,8 +38,8 @@ const Login: React.FC = () => {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-xl mb-4">
               <Scale className="h-8 w-8 text-white" />
             </div>
-            <h1 className="text-2xl font-bold text-white mb-2">DocuLegal</h1>
-            <p className="text-blue-100">Sistema de Gestión de Documentos</p>
+            <h1 className="text-2xl font-bold text-white mb-2">Dokkul</h1>
+            <p className="text-blue-100">Dashboard</p>
           </div>
 
           {/* Form */}

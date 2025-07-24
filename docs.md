@@ -2,7 +2,7 @@
 
 ## Dashboard
 
-Genera un proyecto en react con el nombre de doculegal.
+Genera un proyecto en react con el nombre de Dokkul.
 
 La primera pagina debe ser la del login, donde se requiere ingresar nombre de usuario y contraseña. De resto puedes agregar lo necesario visualmente.
 

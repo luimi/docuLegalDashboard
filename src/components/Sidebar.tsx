@@ -35,8 +35,8 @@ const Sidebar: React.FC = () => {
             <Scale className="h-6 w-6" />
           </div>
           <div>
-            <h1 className="text-xl font-bold">DocuLegal</h1>
-            <p className="text-sm text-slate-400">Sistema Legal</p>
+            <h1 className="text-xl font-bold">Dokkul</h1>
+            <p className="text-sm text-slate-400">Dashboard</p>
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@ const Sidebar: React.FC = () => {
       {/* Footer */}
       <div className="p-4 border-t border-slate-700">
         <p className="text-xs text-slate-400 text-center">
-          © 2025 DocuLegal
+          © 2025 Dokkul
         </p>
       </div>
     </div>
