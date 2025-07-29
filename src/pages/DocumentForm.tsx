@@ -99,6 +99,7 @@ const DocumentForm: React.FC = () => {
     document.set('prompt', prompt);
     document.set('type', type);
     document.set('model', JSON.parse(creator.text));
+    document.set('editedBy', Parse.User.current());
     try {
       await document.save();
       navigate('/dashboard/documents');

@@ -177,6 +177,7 @@ const Documents: React.FC = () => {
                       <div className="flex items-center justify-center space-x-2">
                         <Switch onChange={(checked) => {
                           document.set('active', checked);
+                          document.set('editedBy', Parse.User.current());
                           document.save();
                           
                         }} checked={document.get('active')}/>
