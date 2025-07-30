@@ -1,9 +1,12 @@
 
 import React, { useEffect, useState } from 'react';
 import Parse from 'parse';
+import Prompt from '../components/Prompt';
+
 
 const Chatbot: React.FC = () => {
     const [prompt, setPrompt] = useState('');
+    
 
     useEffect(() => {
         getPrompt();
@@ -13,6 +16,8 @@ const Chatbot: React.FC = () => {
         setPrompt(config.get('chatPrompt') || '');
     }
     const savePrompt = async () => {
+        const config = await Parse.Config.get();
+        console.log(config.get('chatPrompt') === prompt);
         alert('Aun no implementado');
         //TODO save prompt to Parse Config
     }
@@ -27,20 +32,7 @@ const Chatbot: React.FC = () => {
             <div className="mx-auto mt-10">
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <div>
-                        <label htmlFor="prompt" className="block text-sm font-medium text-gray-700 mb-2">
-                            Prompt
-                        </label>
-                        <textarea
-                            id="prompt"
-                            value={prompt}
-                            onChange={(e) => setPrompt(e.target.value)}
-                            rows={4}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Escribe tu prompt para el chatbot..."
-                        />
-                        <p className="text-sm text-gray-500 mt-1">
-                            Escribe una instrucción o pregunta para el chatbot.
-                        </p>
+                        <Prompt id="prompt" value={prompt} onChange={setPrompt} title="Instrucción del Chatbot" info="Define cómo debe responder el chatbot a las preguntas de los usuarios." code='chatbot'/>'
                         <div className="flex justify-end mt-6">
                             <button
                                 type="button"
