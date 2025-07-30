@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Parse from 'parse';
 import Prompt from '../components/Prompt';
+import { saveNewPrompt } from '../utils/promptHistoryCtrl';
 
 
 const Chatbot: React.FC = () => {
@@ -17,9 +18,12 @@ const Chatbot: React.FC = () => {
     }
     const savePrompt = async () => {
         const config = await Parse.Config.get();
-        console.log(config.get('chatPrompt') === prompt);
-        alert('Aun no implementado');
-        //TODO save prompt to Parse Config
+        if(config.get('chatPrompt') !== prompt) {
+            saveNewPrompt(prompt, 'chatbot');
+        }
+
+        await Parse.Cloud.run('saveConfig', { key: 'chatPrompt', value: prompt });
+        alert('Guardado correctamente');
     }
     return (
         <div className="max-w-7xl mx-auto">

@@ -1,6 +1,6 @@
 import { History } from 'lucide-react';
 import React, { FC, useState } from 'react'
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import { FileWarning } from 'lucide-react';
 import Parse from 'parse';
 
@@ -10,7 +10,7 @@ interface PromptProps {
     onChange: (value: string) => void;
     title?: string;
     info?: string;
-    code: string;
+    code?: string;
 }
 
 const Prompt: FC<PromptProps> = ({ id, value, onChange, title, info, code }) => {
@@ -27,7 +27,6 @@ const Prompt: FC<PromptProps> = ({ id, value, onChange, title, info, code }) => 
     const getHistory = async () => {
         setLoading(true);
         const result = await new Parse.Query('PromptHistory').equalTo('code', code).descending('createdAt').find();
-        console.log(result)
         setHistory(result)
         setLoading(false);
     }
@@ -50,7 +49,7 @@ const Prompt: FC<PromptProps> = ({ id, value, onChange, title, info, code }) => 
                     {info}
                 </p>
                 <p className="text-right">
-                    <History className="inline h-4 w-4 text-gray-500" onClick={()=> setOpen(true)}/>
+                    {code && <History className="inline h-4 w-4 text-gray-500" onClick={()=> setOpen(true)}/>}
                 </p>
             </div>
             <Dialog open={open} onClose={setOpen} className="relative z-10">

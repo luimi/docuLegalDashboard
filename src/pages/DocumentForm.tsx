@@ -15,6 +15,8 @@ import { registerCreatorTheme } from 'survey-creator-core';
 import type { ICreatorOptions } from 'survey-creator-core';
 import "survey-creator-core/survey-creator-core.i18n";
 import './styles/DocumentForm.css';
+import Prompt from '../components/Prompt';
+import { saveNewPrompt } from '../utils/promptHistoryCtrl';
 registerCreatorTheme(SurveyCreatorTheme);
 
 const defaultCreatorOptions: ICreatorOptions = {
@@ -84,6 +86,9 @@ const DocumentForm: React.FC = () => {
     let document;
     if (isEditing && id) {
       document = await new Parse.Query('Document').get(id as string);
+      if(document.get("prompt") !== prompt) {
+        await saveNewPrompt(document.get("prompt"), id);
+      }
     } else {
       document = new Parse.Object('Document');
       const acl = new Parse.ACL();
@@ -187,24 +192,7 @@ const DocumentForm: React.FC = () => {
                 <option value="paid">Pago</option>
               </select>
             </div>
-
-            <div className="md:col-span-2">
-              <label htmlFor="prompt" className="block text-sm font-medium text-gray-700 mb-2">
-                Prompt del Documento *
-              </label>
-              <textarea
-                id="prompt"
-                value={prompt}
-                onChange={(e) => setPrompt(e.target.value)}
-                rows={4}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Describe cómo debe generarse el documento..."
-                required
-              />
-              <p className="text-sm text-gray-500 mt-1">
-                Este texto se utilizará como instrucciones para generar el documento.
-              </p>
-            </div>
+            <Prompt id="prompt" value={prompt} onChange={setPrompt} title="Prompt del Documento *" info="Este texto se utilizará como instrucciones para generar el documento." code={id} />
           </div>
         </div>
 
